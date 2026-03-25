@@ -381,7 +381,7 @@
         <span class="step-label" id="lbl2">Business Details</span>
       </div>
 
-      <form id="applicationForm" name="merchant-application" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+      <form id="applicationForm" name="merchant-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="merchant-application">
         <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
 
@@ -478,15 +478,13 @@
           </div>
 
           <hr class="form-divider">
-          <div class="form-section-label">Upload Bank Statements *</div>
-          <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;">Upload your last 3 months of business bank statements (PDF, JPG, or PNG). Max 10MB per file.</p>
-          <div class="file-upload" onclick="document.getElementById('bankStatements').click()">
+          <div class="form-section-label">Bank Statement Upload</div>
+          <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;">After submitting, a secure Google Form will open in a new tab for you to upload your last 3 months of business bank statements (PDF, JPG, or PNG). Your files are stored securely in Google Drive.</p>
+          <div class="file-upload" style="cursor:default;border-color:var(--gold);background:var(--gold-dim);">
             <div class="file-upload-icon">📄</div>
-            <p>Click to <strong>upload bank statements</strong></p>
-            <p style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">PDF · JPG · PNG — Max 10MB each</p>
+            <p><strong>Files collected via Google Forms</strong></p>
+            <p style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">A secure upload link will open after you submit below</p>
           </div>
-          <input type="file" id="bankStatements" name="bank_statements" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="showFiles(this)" required>
-          <div id="fileNames"></div>
 
           <div class="consent-row">
             <input type="checkbox" id="consent" name="consent" value="yes" required>
@@ -502,7 +500,7 @@
     <div class="success-message" id="successMessage">
       <div class="success-icon">✓</div>
       <h3>Application Received!</h3>
-      <p>Thank you for applying. A member of our team will review your file and reach out within 1 business hour with your best available options.</p>
+      <p>Thank you for applying. A Google Form has opened in a new tab — please complete your bank statement upload there to finalize your application. Our team will reach out within 1 business hour.</p>
       <a href="tel:+19545918410" class="btn-primary" style="display:inline-block;margin-top:24px;">Call Us: (954) 591-8410</a>
     </div>
   </div>
@@ -561,19 +559,9 @@
 <script>
   var PARTIAL_LEAD_WEBHOOK = 'https://hook.us2.make.com/0yakmy5vuru9o0emnneqdd8qv30dbd7n';
   var FULL_LEAD_WEBHOOK = 'https://hook.us2.make.com/dtcup7xmyo1hp2ocsepumfu76wopca3u';
+  var GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScTJUmSGDEOPr-UISPJzMMYdEaCCz1LwPBph0F-sSQcnB_gYg/viewform';
 
-  function showFiles(input) {
-    var c = document.getElementById('fileNames');
-    if (!input.files.length) { c.innerHTML = ''; return; }
-    var h = '';
-    for (var i = 0; i < input.files.length; i++) {
-      var f = input.files[i];
-      h += '<div class="file-item">📎 ' + f.name + ' (' + (f.size/1024).toFixed(0) + ' KB)</div>';
-    }
-    c.innerHTML = h;
-  }
-
-  document.getElementById('phone').addEventListener('input', function(e) {
+document.getElementById('phone').addEventListener('input', function(e) {
     var v = e.target.value.replace(/\D/g, '');
     if (v.length > 10) v = v.slice(0, 10);
     if (v.length >= 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
@@ -662,6 +650,8 @@
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
       }).catch(function(){});
+      // Open Google Form for bank statement upload
+      window.open(GOOGLE_FORM_URL, '_blank');
       // Also submit to Netlify
       fetch('/', { method: 'POST', body: new FormData(form) })
         .then(function() {
