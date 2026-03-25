@@ -264,6 +264,28 @@
 </head>
 <body>
 
+<!-- HIDDEN NETLIFY DETECTION FORMS -->
+<form name="lead-capture" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="first_name">
+  <input type="text" name="last_name">
+  <input type="tel" name="phone">
+  <input type="email" name="email">
+  <input type="text" name="consent">
+</form>
+
+<form name="merchant-application" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="first_name">
+  <input type="text" name="last_name">
+  <input type="tel" name="phone">
+  <input type="email" name="email">
+  <input type="text" name="business_name">
+  <input type="text" name="industry">
+  <input type="text" name="monthly_revenue">
+  <input type="text" name="time_in_business">
+  <input type="text" name="funding_amount">
+  <input type="text" name="use_of_funds">
+</form>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Basecamp <span>Capital Group</span></div>
@@ -375,28 +397,15 @@
       <!-- STEP INDICATOR -->
       <div class="step-indicator">
         <div class="step-dot active" id="dot1">1</div>
-        <span class="step-label active" id="lbl1">Your Info</span>
+        <span class="step-label active" id="lbl1">Step 1 of 2 — Your Information</span>
         <div class="step-connector" id="conn1"></div>
         <div class="step-dot" id="dot2">2</div>
-        <span class="step-label" id="lbl2">Business Details</span>
+        <span class="step-label" id="lbl2">Step 2 of 2 — Business Details</span>
       </div>
 
-      <!-- Hidden form for Netlify partial lead submission (Step 1 contact info) -->
-      <form id="partialLeadForm" name="partial-lead" method="POST" data-netlify="true" style="display:none;">
-        <input type="hidden" name="form-name" value="partial-lead">
-        <input type="hidden" name="first_name" id="pl_first_name">
-        <input type="hidden" name="last_name" id="pl_last_name">
-        <input type="hidden" name="email" id="pl_email">
-        <input type="hidden" name="phone" id="pl_phone">
-      </form>
-
-      <form id="applicationForm" name="merchant-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-        <input type="hidden" name="form-name" value="merchant-application">
-        <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
-
-        <!-- STEP 1: Contact Info -->
-        <div class="form-step active" id="step1">
-          <div class="form-section-label">Step 1 of 2 — Your Information</div>
+      <!-- STEP 1: Contact Info (not a form, fields read by JS) -->
+      <div id="step1" class="form-step active">
+        <div class="form-section-label">Your Information</div>
           <div class="form-row">
             <div class="form-group"><label>First Name *</label><input type="text" name="first_name" id="first_name" placeholder="John" required></div>
             <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" id="last_name" placeholder="Smith" required></div>
@@ -406,15 +415,20 @@
             <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" id="phone" placeholder="(555) 123-4567" required></div>
           </div>
           <div class="consent-row" style="margin-top:20px;">
-            <input type="checkbox" id="consent" name="consent" value="yes" required>
-            <label for="consent">By continuing, I authorize Basecamp Capital Group and its funding partners to contact me via phone, SMS, or email regarding funding options. Message and data rates may apply. See our <a href="/privacy-policy.html" target="_blank" style="color:var(--gold);">Privacy Policy</a> and <a href="#faq" style="color:var(--gold);">FAQ</a>.</label>
+            <input type="checkbox" id="consent" name="consent" value="yes">
+            <label for="consent">By continuing, I provide my express written consent to Basecamp Capital Group to contact me at the phone number and email address provided, including via autodialed or prerecorded calls and text messages, regarding business funding options. Consent is not required to receive any service. Message and data rates may apply. Reply STOP to opt out. See our <a href="/privacy-policy.html" target="_blank" style="color:var(--gold);">Privacy Policy</a> and <a href="#faq" style="color:var(--gold);">Terms &amp; Conditions</a>.</label>
           </div>
-          <button type="button" class="btn-submit" id="nextBtn" onclick="goToStep2()" style="margin-top:16px;">Next: Business Details →</button>
-        </div>
+          <button type="button" class="btn-submit" id="nextBtn" onclick="goToStep2()" style="margin-top:16px;">Continue: Business Details →</button>
+      </div>
 
-        <!-- STEP 2: Business Info -->
-        <div class="form-step" id="step2">
-          <div class="form-section-label">Step 2 of 2 — Business Information</div>
+      <!-- STEP 2: Business Info -->
+      <form id="step2" class="form-step" action="/" method="POST">
+        <input type="hidden" name="form-name" value="merchant-application">
+        <input type="hidden" name="first_name" id="carry_first_name">
+        <input type="hidden" name="last_name" id="carry_last_name">
+        <input type="hidden" name="phone" id="carry_phone">
+        <input type="hidden" name="email" id="carry_email">
+        <div class="form-section-label">Business Information</div>
           <div class="form-row">
             <div class="form-group"><label>Business Name *</label><input type="text" name="business_name" placeholder="ABC Company LLC" required></div>
             <div class="form-group">
@@ -490,27 +504,11 @@
             </div>
           </div>
 
-          <hr class="form-divider">
-          <div class="form-section-label">Bank Statement Upload</div>
-          <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;">After submitting, a secure Google Form will open in a new tab for you to upload your last 3 months of business bank statements (PDF, JPG, or PNG). Your files are stored securely in Google Drive.</p>
-          <div class="file-upload" style="cursor:default;border-color:var(--gold);background:var(--gold-dim);">
-            <div class="file-upload-icon">📄</div>
-            <p><strong>Files collected via Google Forms</strong></p>
-            <p style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">A secure upload link will open after you submit below</p>
-          </div>
-
           <div class="btn-row">
             <button type="button" class="btn-back" onclick="goToStep1()">← Back</button>
             <button type="submit" class="btn-submit" id="submitBtn" style="flex:1;">Submit Application</button>
           </div>
-        </div>
       </form>
-    </div>
-    <div class="success-message" id="successMessage">
-      <div class="success-icon">✓</div>
-      <h3>Application Received!</h3>
-      <p>Thank you for applying. A Google Form has opened in a new tab — please complete your bank statement upload there to finalize your application. Our team will reach out within 1 business hour.</p>
-      <a href="tel:+19545918410" class="btn-primary" style="display:inline-block;margin-top:24px;">Call Us: (954) 591-8410</a>
     </div>
   </div>
 </section>
@@ -566,11 +564,7 @@
 </footer>
 
 <script>
-  var PARTIAL_LEAD_WEBHOOK = 'https://hook.us2.make.com/0yakmy5vuru9o0emnneqdd8qv30dbd7n';
-  var FULL_LEAD_WEBHOOK = 'https://hook.us2.make.com/dtcup7xmyo1hp2ocsepumfu76wopca3u';
-  var GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScTJUmSGDEOPr-UISPJzMMYdEaCCz1LwPBph0F-sSQcnB_gYg/viewform';
-
-document.getElementById('phone').addEventListener('input', function(e) {
+  document.getElementById('phone').addEventListener('input', function(e) {
     var v = e.target.value.replace(/\D/g, '');
     if (v.length > 10) v = v.slice(0, 10);
     if (v.length >= 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
@@ -584,25 +578,31 @@ document.getElementById('phone').addEventListener('input', function(e) {
     var em = document.getElementById('email').value.trim();
     var ph = document.getElementById('phone').value.trim();
     if (!fn || !ln || !em || !ph) {
-      alert('Please fill in all fields before continuing.');
+      alert('Please fill in all required fields before continuing.');
       return;
     }
     if (!document.getElementById('consent').checked) {
-      alert('Please agree to the consent terms before continuing.');
+      alert('Please check the consent box before continuing.');
       return;
     }
-    // Fire partial lead webhook to Make.com (fire and forget)
-    fetch(PARTIAL_LEAD_WEBHOOK, {
+    // Silently POST to Netlify lead-capture form (fire and forget)
+    fetch('/', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({first_name: fn, last_name: ln, email: em, phone: ph})
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'form-name': 'lead-capture',
+        'first_name': fn,
+        'last_name': ln,
+        'phone': ph,
+        'email': em,
+        'consent': 'yes'
+      }).toString()
     }).catch(function(){});
-    // Submit partial lead to Netlify forms (fire and forget)
-    document.getElementById('pl_first_name').value = fn;
-    document.getElementById('pl_last_name').value = ln;
-    document.getElementById('pl_email').value = em;
-    document.getElementById('pl_phone').value = ph;
-    fetch('/', {method: 'POST', body: new FormData(document.getElementById('partialLeadForm'))}).catch(function(){});
+    // Populate carry-over hidden fields in Step 2 form
+    document.getElementById('carry_first_name').value = fn;
+    document.getElementById('carry_last_name').value = ln;
+    document.getElementById('carry_phone').value = ph;
+    document.getElementById('carry_email').value = em;
     // Show step 2
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
@@ -627,6 +627,25 @@ document.getElementById('phone').addEventListener('input', function(e) {
     window.scrollTo({top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth'});
   }
 
+  var step2Form = document.getElementById('step2');
+  if (step2Form) {
+    step2Form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(step2Form)).toString()
+      }).then(function() {
+        window.location.href = '/thank-you.html';
+      }).catch(function() {
+        window.location.href = '/thank-you.html';
+      });
+    });
+  }
+
   function toggleFaq(btn) {
     var item = btn.parentElement;
     var was = item.classList.contains('open');
@@ -640,52 +659,6 @@ document.getElementById('phone').addEventListener('input', function(e) {
       if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
   });
-  var form = document.getElementById('applicationForm');
-  if (form) {
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      var btn = document.getElementById('submitBtn');
-      btn.disabled = true; btn.textContent = 'Submitting...';
-      var fn = document.getElementById('first_name').value.trim();
-      var ln = document.getElementById('last_name').value.trim();
-      var fullName = fn + ' ' + ln;
-      var payload = {
-        name: fullName,
-        first_name: fn,
-        last_name: ln,
-        email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        business_name: form.querySelector('[name="business_name"]').value.trim(),
-        industry: form.querySelector('[name="industry"]').value,
-        monthly_revenue: form.querySelector('[name="monthly_revenue"]').value,
-        time_in_business: form.querySelector('[name="time_in_business"]').value,
-        funding_amount: form.querySelector('[name="funding_amount"]').value,
-        use_of_funds: form.querySelector('[name="use_of_funds"]').value,
-        source: 'Website'
-      };
-      // Fire full lead webhook to Make.com (fire and forget)
-      fetch(FULL_LEAD_WEBHOOK, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload)
-      }).catch(function(){});
-      // Open Google Form for bank statement upload
-      window.open(GOOGLE_FORM_URL, '_blank');
-      // Also submit to Netlify
-      fetch('/', { method: 'POST', body: new FormData(form) })
-        .then(function() {
-          document.getElementById('formContent').style.display = 'none';
-          document.getElementById('successMessage').classList.add('show');
-          window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
-        })
-        .catch(function() {
-          // Even if Netlify fails, show success since Make.com webhook fired
-          document.getElementById('formContent').style.display = 'none';
-          document.getElementById('successMessage').classList.add('show');
-          window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
-        });
-    });
-  }
 </script>
 </body>
 </html>
