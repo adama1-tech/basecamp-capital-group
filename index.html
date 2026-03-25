@@ -381,6 +381,15 @@
         <span class="step-label" id="lbl2">Business Details</span>
       </div>
 
+      <!-- Hidden form for Netlify partial lead submission (Step 1 contact info) -->
+      <form id="partialLeadForm" name="partial-lead" method="POST" data-netlify="true" style="display:none;">
+        <input type="hidden" name="form-name" value="partial-lead">
+        <input type="hidden" name="first_name" id="pl_first_name">
+        <input type="hidden" name="last_name" id="pl_last_name">
+        <input type="hidden" name="email" id="pl_email">
+        <input type="hidden" name="phone" id="pl_phone">
+      </form>
+
       <form id="applicationForm" name="merchant-application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="merchant-application">
         <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
@@ -578,12 +587,18 @@ document.getElementById('phone').addEventListener('input', function(e) {
       alert('Please fill in all fields before continuing.');
       return;
     }
-    // Fire partial lead webhook (fire and forget)
+    // Fire partial lead webhook to Make.com (fire and forget)
     fetch(PARTIAL_LEAD_WEBHOOK, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({first_name: fn, last_name: ln, email: em, phone: ph})
     }).catch(function(){});
+    // Submit partial lead to Netlify forms (fire and forget)
+    document.getElementById('pl_first_name').value = fn;
+    document.getElementById('pl_last_name').value = ln;
+    document.getElementById('pl_email').value = em;
+    document.getElementById('pl_phone').value = ph;
+    fetch('/', {method: 'POST', body: new FormData(document.getElementById('partialLeadForm'))}).catch(function(){});
     // Show step 2
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
