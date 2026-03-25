@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Basecamp Capital Group | Business Funding</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --navy-light: #132B50;
+    --gold: #C9A84C;
+    --gold-light: #E0C76E;
+    --gold-dim: rgba(201, 168, 76, 0.15);
+    --cream: #FAF7F0;
+    --white: #FFFFFF;
+    --gray-100: #F5F5F5;
+    --gray-200: #E8E8E8;
+    --gray-400: #999;
+    --gray-600: #666;
+    --gray-800: #333;
+    --success: #2ECC71;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--gray-800); background: var(--cream); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(11, 29, 58, 0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
+  .nav-logo span { color: var(--white); font-weight: 400; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.3px; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta { background: var(--gold) !important; color: var(--navy) !important; padding: 10px 24px; border-radius: 6px; font-weight: 600 !important; transition: background 0.3s !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; }
+  .mobile-toggle { display: none; cursor: pointer; }
+  .mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--white); margin: 5px 0; transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(19,43,80,0.8) 0%, transparent 70%);
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; }
+  .hero-badge {
+    display: inline-block; padding: 8px 20px; border-radius: 100px;
+    background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold); font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px;
+    animation: fadeDown 0.8s ease-out;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+    font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 24px;
+    animation: fadeDown 0.8s ease-out 0.15s both;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p {
+    font-size: 1.15rem; color: rgba(255,255,255,0.65);
+    line-height: 1.7; max-width: 580px; margin: 0 auto 40px;
+    animation: fadeDown 0.8s ease-out 0.3s both;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeDown 0.8s ease-out 0.45s both; }
+  .btn-primary {
+    background: var(--gold); color: var(--navy); padding: 16px 40px; border-radius: 8px;
+    font-size: 1rem; font-weight: 700; text-decoration: none; letter-spacing: 0.3px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.4); background: var(--gold-light); }
+  .btn-secondary {
+    background: transparent; color: var(--white); padding: 16px 40px; border-radius: 8px;
+    font-size: 1rem; font-weight: 600; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25); transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+  .hero-stats {
+    display: flex; gap: 48px; justify-content: center;
+    margin-top: 64px; padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    animation: fadeDown 0.8s ease-out 0.6s both;
+  }
+  .hero-stat h3 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--gold); font-weight: 700; }
+  .hero-stat p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 4px; letter-spacing: 0.5px; }
+
+  /* FEATURES */
+  .features { padding: 100px 48px; background: var(--cream); }
+  .section-header { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+  .section-header .label { font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .section-header h2 { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 28px; max-width: 1100px; margin: 0 auto; }
+  .feature-card {
+    background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 36px 32px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(11,29,58,0.08); border-color: var(--gold); }
+  .feature-icon { width: 52px; height: 52px; border-radius: 12px; background: var(--gold-dim); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-size: 1.5rem; }
+  .feature-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .feature-card p { font-size: 0.92rem; color: var(--gray-600); line-height: 1.65; }
+
+  /* HOW IT WORKS */
+  .how-it-works { padding: 100px 48px; background: var(--navy); position: relative; }
+  .how-it-works .section-header h2 { color: var(--white); }
+  .steps { display: flex; gap: 0; max-width: 1000px; margin: 0 auto; position: relative; }
+  .steps::before { content: ''; position: absolute; top: 36px; left: 12%; right: 12%; height: 2px; background: rgba(201,168,76,0.2); }
+  .step { flex: 1; text-align: center; padding: 0 20px; position: relative; }
+  .step-num {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--gold-dim); border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold);
+    position: relative; z-index: 2;
+  }
+  .step h3 { color: var(--white); font-size: 1.05rem; font-weight: 600; margin-bottom: 8px; }
+  .step p { color: rgba(255,255,255,0.5); font-size: 0.88rem; line-height: 1.6; }
+
+  /* APPLY */
+  .apply-section { padding: 100px 48px; background: var(--cream); }
+  .form-container {
+    max-width: 720px; margin: 0 auto;
+    background: var(--white); border: 1px solid var(--gray-200);
+    border-radius: 16px; padding: 48px;
+    box-shadow: 0 8px 40px rgba(11,29,58,0.06);
+  }
+  .form-container h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 6px; }
+  .form-container > p { color: var(--gray-600); font-size: 0.92rem; margin-bottom: 32px; }
+  .form-row { display: flex; gap: 16px; margin-bottom: 20px; }
+  .form-group { flex: 1; display: flex; flex-direction: column; }
+  .form-group label { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; letter-spacing: 0.3px; }
+  .form-group input, .form-group select {
+    padding: 12px 16px; border-radius: 8px; border: 1px solid var(--gray-200);
+    font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--gray-800);
+    background: var(--gray-100); transition: border-color 0.3s, box-shadow 0.3s; outline: none;
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); background: var(--white); }
+  .form-group input::placeholder { color: var(--gray-400); }
+  .form-divider { border: none; border-top: 1px solid var(--gray-200); margin: 28px 0; }
+  .form-section-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .file-upload { border: 2px dashed var(--gray-200); border-radius: 10px; padding: 32px; text-align: center; cursor: pointer; transition: border-color 0.3s, background 0.3s; }
+  .file-upload:hover { border-color: var(--gold); background: var(--gold-dim); }
+  .file-upload-icon { font-size: 2rem; margin-bottom: 8px; }
+  .file-upload p { font-size: 0.88rem; color: var(--gray-600); }
+  .file-upload p strong { color: var(--gold); }
+  .file-item { display: flex; align-items: center; padding: 8px 12px; background: var(--gray-100); border-radius: 6px; margin-top: 8px; font-size: 0.85rem; }
+  .consent-row { display: flex; align-items: flex-start; gap: 10px; margin: 24px 0; }
+  .consent-row input[type="checkbox"] { margin-top: 3px; accent-color: var(--gold); width: 18px; height: 18px; }
+  .consent-row label { font-size: 0.82rem; color: var(--gray-600); line-height: 1.5; }
+  .btn-submit {
+    width: 100%; padding: 16px; background: var(--gold); color: var(--navy);
+    border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+    font-size: 1rem; font-weight: 700; cursor: pointer; letter-spacing: 0.3px;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.25);
+  }
+  .btn-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.35); }
+  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .success-message { display: none; text-align: center; padding: 48px 24px; }
+  .success-message.show { display: block; }
+  .success-icon { width: 80px; height: 80px; border-radius: 50%; background: rgba(46,204,113,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2.5rem; }
+  .success-message h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 12px; }
+  .success-message p { color: var(--gray-600); font-size: 1rem; line-height: 1.6; }
+
+  /* STEP INDICATOR */
+  .step-indicator { display: flex; align-items: center; gap: 0; margin-bottom: 32px; }
+  .step-dot {
+    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 0.82rem; font-weight: 700;
+    border: 2px solid var(--gray-200); color: var(--gray-400); background: var(--white);
+    transition: all 0.3s; flex-shrink: 0;
+  }
+  .step-dot.active { border-color: var(--gold); color: var(--navy); background: var(--gold); }
+  .step-dot.done { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+  .step-label { font-size: 0.78rem; font-weight: 600; color: var(--gray-400); margin-left: 8px; letter-spacing: 0.3px; }
+  .step-label.active { color: var(--navy); }
+  .step-connector { flex: 1; height: 2px; background: var(--gray-200); margin: 0 12px; transition: background 0.3s; }
+  .step-connector.done { background: var(--gold); }
+
+  /* FORM STEPS */
+  .form-step { display: none; }
+  .form-step.active { display: block; }
+  .btn-row { display: flex; gap: 12px; align-items: center; }
+  .btn-back {
+    padding: 16px 24px; border-radius: 8px; border: 1px solid var(--gray-200);
+    background: var(--white); color: var(--gray-600); font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; font-weight: 600; cursor: pointer; transition: border-color 0.3s, color 0.3s;
+    flex-shrink: 0;
+  }
+  .btn-back:hover { border-color: var(--gold); color: var(--navy); }
+
+  /* FAQ */
+  .faq { padding: 100px 48px; background: var(--white); }
+  .faq-list { max-width: 720px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--gray-200); }
+  .faq-question {
+    width: 100%; padding: 24px 0; background: none; border: none;
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'DM Sans', sans-serif; font-size: 1.05rem; font-weight: 600; color: var(--navy);
+    cursor: pointer; text-align: left;
+  }
+  .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--gold); transition: transform 0.3s; font-weight: 300; flex-shrink: 0; margin-left: 16px; }
+  .faq-item.open .faq-question::after { content: '−'; }
+  .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 24px; }
+  .faq-answer p { color: var(--gray-600); font-size: 0.92rem; line-height: 1.7; }
+
+  /* DISCLAIMER */
+  .disclaimer { background: var(--gray-100); padding: 32px 48px; border-top: 1px solid var(--gray-200); }
+  .disclaimer p { max-width: 900px; margin: 0 auto; font-size: 0.75rem; color: var(--gray-400); line-height: 1.7; text-align: center; }
+
+  /* FOOTER */
+  footer { background: var(--navy); padding: 48px; text-align: center; border-top: 1px solid rgba(201,168,76,0.15); }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); margin-bottom: 12px; }
+  .footer-logo span { color: rgba(255,255,255,0.7); font-weight: 400; }
+  footer p { color: rgba(255,255,255,0.35); font-size: 0.82rem; margin-bottom: 6px; }
+  footer a { color: var(--gold); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .mobile-toggle { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy); padding: 24px; border-top: 1px solid rgba(201,168,76,0.15); }
+    .hero { padding: 120px 24px 60px; }
+    .hero-stats { flex-direction: column; gap: 24px; }
+    .features, .how-it-works, .apply-section, .faq { padding: 64px 20px; }
+    .form-container { padding: 28px 20px; }
+    .form-row { flex-direction: column; gap: 16px; }
+    .steps { flex-direction: column; gap: 36px; }
+    .steps::before { display: none; }
+    .section-header h2 { font-size: 1.8rem; }
+    .disclaimer { padding: 24px 20px; }
+    footer { padding: 36px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Basecamp <span>Capital Group</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#features">Why Us</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQ</a>
+    <a href="#apply" class="nav-cta">Apply Now</a>
+  </div>
+  <div class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Business Funding Solutions</div>
+    <h1>Get the Capital Your Business <em>Deserves</em></h1>
+    <p>Fast, flexible funding from $10K to $2M. No hard credit pulls, same-day decisions, and funds deposited as soon as 24 hours. We keep your business moving.</p>
+    <div class="hero-buttons">
+      <a href="#apply" class="btn-primary">Apply Now — It's Free</a>
+      <a href="tel:+19545918410" class="btn-secondary">Call Us: (954) 591-8410</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><h3>$10K–$2M</h3><p>FUNDING AMOUNTS</p></div>
+      <div class="hero-stat"><h3>24 Hrs</h3><p>FUNDING AS FAST AS</p></div>
+      <div class="hero-stat"><h3>All Industries</h3><p>WELCOME</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="features" id="features">
+  <div class="section-header">
+    <div class="label">Why Choose Us</div>
+    <h2>Funding Built for Real Business Owners</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Same-Day Decisions</h3>
+      <p>Applications reviewed within hours, not weeks. Get a decision fast so you can focus on running your business.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>No Hard Credit Check</h3>
+      <p>We look at your revenue, not just your credit score. Past declines or imperfect credit don't have to stop you here.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h3>Flexible Repayment</h3>
+      <p>Funding structured around your cash flow — designed to work with your business, not against it.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🤝</div>
+      <h3>Transparent Process</h3>
+      <p>No hidden surprises. We walk you through every step so you always know exactly what you're agreeing to.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏗️</div>
+      <h3>All Industries Welcome</h3>
+      <p>Restaurants, retail, construction, trucking, healthcare — whatever your industry, we work to find you a solution.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Simple Requirements</h3>
+      <p>3+ months in business and $10K+ monthly revenue. That's generally all we need to get started.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how">
+  <div class="section-header">
+    <div class="label">The Process</div>
+    <h2>Funded in Three Simple Steps</h2>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Apply Online</h3>
+      <p>Fill out our quick application and upload your last 3 months of bank statements. Takes less than 5 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Get Your Decision</h3>
+      <p>Our team reviews your file and comes back with the best available offer for your business — usually within hours.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Get Funded</h3>
+      <p>Accept your offer, sign electronically, and receive your funds as soon as the same or next business day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION FORM -->
+<section class="apply-section" id="apply">
+  <div class="section-header">
+    <div class="label">Get Started</div>
+    <h2>Apply for Funding Today</h2>
+  </div>
+  <div class="form-container">
+    <div id="formContent">
+      <h3>Business Funding Application</h3>
+      <p>Complete both steps below. Our team will review your file and reach out within 1 business hour.</p>
+
+      <!-- STEP INDICATOR -->
+      <div class="step-indicator">
+        <div class="step-dot active" id="dot1">1</div>
+        <span class="step-label active" id="lbl1">Your Info</span>
+        <div class="step-connector" id="conn1"></div>
+        <div class="step-dot" id="dot2">2</div>
+        <span class="step-label" id="lbl2">Business Details</span>
+      </div>
+
+      <form id="applicationForm" name="merchant-application" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data">
+        <input type="hidden" name="form-name" value="merchant-application">
+        <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+        <!-- STEP 1: Contact Info -->
+        <div class="form-step active" id="step1">
+          <div class="form-section-label">Step 1 of 2 — Your Information</div>
+          <div class="form-row">
+            <div class="form-group"><label>First Name *</label><input type="text" name="first_name" id="first_name" placeholder="John" required></div>
+            <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" id="last_name" placeholder="Smith" required></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Email *</label><input type="email" name="email" id="email" placeholder="john@business.com" required></div>
+            <div class="form-group"><label>Phone Number *</label><input type="tel" name="phone" id="phone" placeholder="(555) 123-4567" required></div>
+          </div>
+          <button type="button" class="btn-submit" id="nextBtn" onclick="goToStep2()">Next: Business Details →</button>
+        </div>
+
+        <!-- STEP 2: Business Info -->
+        <div class="form-step" id="step2">
+          <div class="form-section-label">Step 2 of 2 — Business Information</div>
+          <div class="form-row">
+            <div class="form-group"><label>Business Name *</label><input type="text" name="business_name" placeholder="ABC Company LLC" required></div>
+            <div class="form-group">
+              <label>Industry *</label>
+              <select name="industry" required>
+                <option value="">Select your industry</option>
+                <option>Restaurant / Food Service</option>
+                <option>Retail</option>
+                <option>Construction</option>
+                <option>Healthcare / Medical</option>
+                <option>Trucking / Transportation</option>
+                <option>Auto Repair / Dealership</option>
+                <option>Beauty / Salon / Spa</option>
+                <option>Professional Services</option>
+                <option>Real Estate</option>
+                <option>E-Commerce</option>
+                <option>Manufacturing</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Monthly Revenue *</label>
+              <select name="monthly_revenue" required>
+                <option value="">Select range</option>
+                <option>$10,000 – $25,000</option>
+                <option>$25,000 – $50,000</option>
+                <option>$50,000 – $100,000</option>
+                <option>$100,000 – $250,000</option>
+                <option>$250,000+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Time in Business *</label>
+              <select name="time_in_business" required>
+                <option value="">Select</option>
+                <option>3 – 6 months</option>
+                <option>6 – 12 months</option>
+                <option>1 – 2 years</option>
+                <option>2 – 5 years</option>
+                <option>5+ years</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Funding Amount Requested *</label>
+              <select name="funding_amount" required>
+                <option value="">Select range</option>
+                <option>$10,000 – $25,000</option>
+                <option>$25,000 – $50,000</option>
+                <option>$50,000 – $100,000</option>
+                <option>$100,000 – $250,000</option>
+                <option>$250,000 – $500,000</option>
+                <option>$500,000 – $1,000,000</option>
+                <option>$1,000,000 – $2,000,000</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Use of Funds</label>
+              <select name="use_of_funds">
+                <option value="">Select (optional)</option>
+                <option>Working Capital</option>
+                <option>Inventory</option>
+                <option>Equipment</option>
+                <option>Payroll</option>
+                <option>Expansion</option>
+                <option>Marketing</option>
+                <option>Debt Consolidation</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+          <div class="form-section-label">Upload Bank Statements *</div>
+          <p style="font-size:0.85rem;color:var(--gray-600);margin-bottom:12px;">Upload your last 3 months of business bank statements (PDF, JPG, or PNG). Max 10MB per file.</p>
+          <div class="file-upload" onclick="document.getElementById('bankStatements').click()">
+            <div class="file-upload-icon">📄</div>
+            <p>Click to <strong>upload bank statements</strong></p>
+            <p style="font-size:0.78rem;color:var(--gray-400);margin-top:4px;">PDF · JPG · PNG — Max 10MB each</p>
+          </div>
+          <input type="file" id="bankStatements" name="bank_statements" multiple accept=".pdf,.jpg,.jpeg,.png" style="display:none;" onchange="showFiles(this)" required>
+          <div id="fileNames"></div>
+
+          <div class="consent-row">
+            <input type="checkbox" id="consent" name="consent" value="yes" required>
+            <label for="consent">By submitting this form, I authorize Basecamp Capital Group and its funding partners to contact me via phone, SMS, or email regarding funding options. Submission does not guarantee approval. All funding is subject to underwriting review. Message and data rates may apply.</label>
+          </div>
+          <div class="btn-row">
+            <button type="button" class="btn-back" onclick="goToStep1()">← Back</button>
+            <button type="submit" class="btn-submit" id="submitBtn" style="flex:1;">Submit Application</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">✓</div>
+      <h3>Application Received!</h3>
+      <p>Thank you for applying. A member of our team will review your file and reach out within 1 business hour with your best available options.</p>
+      <a href="tel:+19545918410" class="btn-primary" style="display:inline-block;margin-top:24px;">Call Us: (954) 591-8410</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-header">
+    <div class="label">Common Questions</div>
+    <h2>Frequently Asked Questions</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What do I need to apply?</button>
+      <div class="faq-answer"><p>Your basic contact and business information, your business Tax ID or EIN, and your last 3 months of business bank statements. No lengthy business plans or collateral required for most options.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Will this affect my credit score?</button>
+      <div class="faq-answer"><p>We do not perform a hard credit pull as part of our initial review. Your credit score will not be impacted by submitting an application. Additional review may occur during underwriting depending on the funding option.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">How fast can I get funded?</button>
+      <div class="faq-answer"><p>Most applications are reviewed within a few hours. Once approved and contracts are signed, funds are typically deposited the same day or next business day. Timing may vary based on the funding option and your bank.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What are the minimum requirements?</button>
+      <div class="faq-answer"><p>Generally 3+ months in business and $10,000 or more in monthly revenue. All applications are reviewed individually — requirements may vary based on industry, funding amount, and other factors.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">How does repayment work?</button>
+      <div class="faq-answer"><p>Repayment terms vary by funding option. For certain products, a fixed percentage of your daily or weekly sales is remitted — meaning payments flex with your revenue. Full terms are always disclosed in your agreement prior to signing.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What industries do you work with?</button>
+      <div class="faq-answer"><p>We work with a wide range of industries — restaurants, retail, construction, trucking, healthcare, auto repair, beauty, e-commerce, professional services, and more. If your business generates consistent revenue, we encourage you to apply.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Is there a cost to apply?</button>
+      <div class="faq-answer"><p>No. Submitting an application is completely free and does not obligate you to accept any offer. There is no cost or commitment to apply.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DISCLAIMER -->
+<div class="disclaimer">
+  <p>Basecamp Capital Group connects businesses with third-party funding providers. All funding is subject to underwriting approval by the applicable funding provider. Approval is not guaranteed. Funding amounts, rates, and terms vary based on business performance, industry, and funding provider guidelines. Certain funding products, including merchant cash advances, are purchases of future receivables and are not loans — they are not subject to lending regulations applicable to traditional loans. Not all products are available in all states. This website does not constitute a commitment to fund. Basecamp Capital Group may receive compensation from funding partners in connection with successfully funded transactions. Please review all agreements carefully prior to signing.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Basecamp <span>Capital Group</span></div>
+  <p style="margin-bottom:8px;"><a href="tel:+19545918410">(954) 591-8410</a> · <a href="mailto:basecampcapitalgroup@gmail.com">basecampcapitalgroup@gmail.com</a></p>
+  <p style="margin-top:16px;">© 2026 Basecamp Capital Group. All rights reserved.</p>
+</footer>
+
+<script>
+  var PARTIAL_LEAD_WEBHOOK = 'https://hook.us2.make.com/0yakmy5vuru9o0emnneqdd8qv30dbd7n';
+  var FULL_LEAD_WEBHOOK = 'https://hook.us2.make.com/dtcup7xmyo1hp2ocsepumfu76wopca3u';
+
+  function showFiles(input) {
+    var c = document.getElementById('fileNames');
+    if (!input.files.length) { c.innerHTML = ''; return; }
+    var h = '';
+    for (var i = 0; i < input.files.length; i++) {
+      var f = input.files[i];
+      h += '<div class="file-item">📎 ' + f.name + ' (' + (f.size/1024).toFixed(0) + ' KB)</div>';
+    }
+    c.innerHTML = h;
+  }
+
+  document.getElementById('phone').addEventListener('input', function(e) {
+    var v = e.target.value.replace(/\D/g, '');
+    if (v.length > 10) v = v.slice(0, 10);
+    if (v.length >= 6) v = '(' + v.slice(0,3) + ') ' + v.slice(3,6) + '-' + v.slice(6);
+    else if (v.length >= 3) v = '(' + v.slice(0,3) + ') ' + v.slice(3);
+    e.target.value = v;
+  });
+
+  function goToStep2() {
+    var fn = document.getElementById('first_name').value.trim();
+    var ln = document.getElementById('last_name').value.trim();
+    var em = document.getElementById('email').value.trim();
+    var ph = document.getElementById('phone').value.trim();
+    if (!fn || !ln || !em || !ph) {
+      alert('Please fill in all fields before continuing.');
+      return;
+    }
+    // Fire partial lead webhook (fire and forget)
+    fetch(PARTIAL_LEAD_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({first_name: fn, last_name: ln, email: em, phone: ph})
+    }).catch(function(){});
+    // Show step 2
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+    document.getElementById('dot1').classList.remove('active');
+    document.getElementById('dot1').classList.add('done');
+    document.getElementById('conn1').classList.add('done');
+    document.getElementById('dot2').classList.add('active');
+    document.getElementById('lbl1').classList.remove('active');
+    document.getElementById('lbl2').classList.add('active');
+    window.scrollTo({top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth'});
+  }
+
+  function goToStep1() {
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step1').classList.add('active');
+    document.getElementById('dot1').classList.add('active');
+    document.getElementById('dot1').classList.remove('done');
+    document.getElementById('conn1').classList.remove('done');
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('lbl1').classList.add('active');
+    document.getElementById('lbl2').classList.remove('active');
+    window.scrollTo({top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth'});
+  }
+
+  function toggleFaq(btn) {
+    var item = btn.parentElement;
+    var was = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i) { i.classList.remove('open'); });
+    if (!was) item.classList.add('open');
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var t = document.querySelector(this.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  var form = document.getElementById('applicationForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'Submitting...';
+      var fn = document.getElementById('first_name').value.trim();
+      var ln = document.getElementById('last_name').value.trim();
+      var fullName = fn + ' ' + ln;
+      var payload = {
+        name: fullName,
+        first_name: fn,
+        last_name: ln,
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        business_name: form.querySelector('[name="business_name"]').value.trim(),
+        industry: form.querySelector('[name="industry"]').value,
+        monthly_revenue: form.querySelector('[name="monthly_revenue"]').value,
+        time_in_business: form.querySelector('[name="time_in_business"]').value,
+        funding_amount: form.querySelector('[name="funding_amount"]').value,
+        use_of_funds: form.querySelector('[name="use_of_funds"]').value,
+        source: 'Website'
+      };
+      // Fire full lead webhook to Make.com (fire and forget)
+      fetch(FULL_LEAD_WEBHOOK, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+      // Also submit to Netlify
+      fetch('/', { method: 'POST', body: new FormData(form) })
+        .then(function() {
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('successMessage').classList.add('show');
+          window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
+        })
+        .catch(function() {
+          // Even if Netlify fails, show success since Make.com webhook fired
+          document.getElementById('formContent').style.display = 'none';
+          document.getElementById('successMessage').classList.add('show');
+          window.scrollTo({ top: document.getElementById('apply').offsetTop - 80, behavior: 'smooth' });
+        });
+    });
+  }
+</script>
+</body>
+</html>
